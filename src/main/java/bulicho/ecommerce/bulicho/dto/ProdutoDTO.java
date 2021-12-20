@@ -1,72 +1,49 @@
-package bulicho.ecommerce.bulicho.entities;
+package bulicho.ecommerce.bulicho.dto;
 
-
-import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import bulicho.ecommerce.bulicho.entities.Categoria;
+import bulicho.ecommerce.bulicho.entities.FotoProduto;
+import bulicho.ecommerce.bulicho.entities.Marca;
 
-import bulicho.ecommerce.bulicho.dto.ProdutoDTO;
-
-@Entity
-public class Produto implements Serializable {
- 
-  @Id
-  @GeneratedValue
-  private UUID id;
+public class ProdutoDTO {
+  
   private Long codigo;
   private String titulo;
   private Double preco;
-  @Column(name = "quantidade_em_estoque")
   private Long quantidadeEmEstoque;
   private String descricao;
-  @Column(name = "caminho_foto_principal")
   private String caminhoFotoPrincipal;
-  @ManyToOne
-  @JoinColumn(name = "id_marca")
   private Marca marca;
-  @ManyToMany
-  @JoinTable(
-    name = "produtos_categorias",
-    joinColumns = @JoinColumn(name="id_produto"),
-    inverseJoinColumns = @JoinColumn(name = "id_categoria")
-  )
   private List<Categoria> categorias;
-
-  @OneToMany
-  @JoinColumn(name = "id_produto" )
   private List<FotoProduto> fotos;
 
-  public Produto(){}
-
-  public Produto(ProdutoDTO produtoDTO){
-    this.codigo = produtoDTO.getCodigo();
-    this.titulo = produtoDTO.getTitulo();
-    this.preco = produtoDTO.getPreco();
-    this.quantidadeEmEstoque = produtoDTO.getQuantidadeEmEstoque();
-    this.descricao = produtoDTO.getDescricao();
-    this.caminhoFotoPrincipal = produtoDTO.getCaminhoFotoPrincipal();
-    this.marca  = produtoDTO.getMarca();
-    this.categorias = produtoDTO.getCategorias();
-    this.fotos = produtoDTO.getFotos();
-  }
-  public UUID getId() {
-    return this.id;
+  public ProdutoDTO(Long codigo, String titulo, Double preco, Long quantidadeEmEstoque, String descricao, String caminhoFotoPrincipal, Marca marca, List<Categoria> categorias, List<FotoProduto> fotos) {
+    this.codigo = codigo;
+    this.titulo = titulo;
+    this.preco = preco;
+    this.quantidadeEmEstoque = quantidadeEmEstoque;
+    this.descricao = descricao;
+    this.caminhoFotoPrincipal = caminhoFotoPrincipal;
+    this.marca = marca;
+    this.categorias = categorias;
+    this.fotos = fotos;
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  public ProdutoDTO(Long codigo, String titulo, Double preco, Long quantidadeEmEstoque, String descricao, String caminhoFotoPrincipal, Marca marca, List<Categoria> categorias) {
+    this.codigo = codigo;
+    this.titulo = titulo;
+    this.preco = preco;
+    this.quantidadeEmEstoque = quantidadeEmEstoque;
+    this.descricao = descricao;
+    this.caminhoFotoPrincipal = caminhoFotoPrincipal;
+    this.marca = marca;
+    this.categorias = categorias;
   }
 
+  public ProdutoDTO(){}
+
+  
   public Long getCodigo() {
     return this.codigo;
   }
@@ -122,12 +99,21 @@ public class Produto implements Serializable {
   public void setMarca(Marca marca) {
     this.marca = marca;
   }
+
   public List<Categoria> getCategorias() {
     return this.categorias;
   }
 
   public void setCategorias(List<Categoria> categorias) {
     this.categorias = categorias;
+  }
+
+  public List<FotoProduto> getFotos() {
+    return this.fotos;
+  }
+
+  public void setFotos(List<FotoProduto> fotos) {
+    this.fotos = fotos;
   }
 
 }

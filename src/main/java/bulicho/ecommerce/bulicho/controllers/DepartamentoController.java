@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import bulicho.ecommerce.bulicho.dto.DepartamentoDTO;
 import bulicho.ecommerce.bulicho.entities.Departamento;
 import bulicho.ecommerce.bulicho.models.ResponseModel;
-import bulicho.ecommerce.bulicho.services.impl.DepartamentoService;
+import bulicho.ecommerce.bulicho.services.interfaces.IDepartamentoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiResponses;
 public class DepartamentoController {
   
   @Autowired
-  private DepartamentoService departamentoService;
+  private IDepartamentoService departamentoService;
 
   @ApiOperation(value = "Lista todos os Departamentos")
   @ApiResponses(value={
@@ -50,7 +50,7 @@ public class DepartamentoController {
   @GetMapping("/{id}")
   public ResponseEntity<ResponseModel<Departamento>> getDepartamento(@ApiParam(value = "Id Departamento",required = true) @PathVariable("id") Long id){
     
-   Departamento departamento = departamentoService.getDepartamento(id);
+   Departamento departamento = departamentoService.get(id);
    ResponseModel<Departamento> response;
    List<Departamento> data = new ArrayList<>();
    if(departamento==null){
@@ -73,8 +73,8 @@ public class DepartamentoController {
     HttpStatus status;
 
     try {
-      Long id = departamentoService.createDepartamento(departamentoDTO);
-      Departamento departamentoCreated = departamentoService.getDepartamento(id);
+      Long id = departamentoService.create(departamentoDTO);
+      Departamento departamentoCreated = departamentoService.get(id);
       data.add(departamentoCreated);
       response = new ResponseModel<Departamento>(201,"Sucesso",data);
       status = HttpStatus.CREATED;
@@ -95,7 +95,7 @@ public class DepartamentoController {
     if(!departamentoService.departamentoExists(id)) 
     return new ResponseEntity<ResponseModel<Departamento>>(new ResponseModel<Departamento>(404,"Departamento não encontrado",new ArrayList<>()),HttpStatus.NOT_FOUND);
 
-    Departamento departamentoUpdated  = departamentoService.updateDepartamento(id, departamentoDTO);
+    Departamento departamentoUpdated  = departamentoService.update(id, departamentoDTO);
     data.add(departamentoUpdated);
     response =  new ResponseModel<Departamento>(200,"Sucesso",data);
 
@@ -107,7 +107,7 @@ public class DepartamentoController {
   public ResponseEntity<ResponseModel<Departamento>> deleteDepartamento(@ApiParam(value = "Id Departamento",required = true) @PathVariable Long id){
     if(!departamentoService.departamentoExists(id)) 
     return new ResponseEntity<ResponseModel<Departamento>>(new ResponseModel<Departamento>(404,"Departamento não encontrado",new ArrayList<>()),HttpStatus.NOT_FOUND);
-    departamentoService.deleteDepartamento(id);
+    departamentoService.delete(id);
     ResponseModel<Departamento> response = new ResponseModel<Departamento>(203,"Sucesso",new ArrayList<>());
     
     return new ResponseEntity<ResponseModel<Departamento>>(response,HttpStatus.NON_AUTHORITATIVE_INFORMATION);

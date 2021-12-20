@@ -22,7 +22,7 @@ public class CategoriaService implements ICategoriaService {
   }
 
   @Override
-  public Categoria getCategoria(Long id) {
+  public Categoria get(Long id) {
     Categoria categoria;
     try{
       categoria = categoriaRepository.findById(id).get();
@@ -33,7 +33,7 @@ public class CategoriaService implements ICategoriaService {
   }
 
   @Override
-  public Long createCategoria(CategoriaDTO categoriaDTO) {
+  public Long create(CategoriaDTO categoriaDTO) {
     Long id = categoriaRepository.save(new Categoria(categoriaDTO)).getId();
     return id;
   }
@@ -44,7 +44,7 @@ public class CategoriaService implements ICategoriaService {
   }
 
   @Override
-  public Categoria updateCategoria(Long id, CategoriaDTO categoriaDto) {
+  public Categoria update(Long id, CategoriaDTO categoriaDto) {
     Categoria categoria ;
     try{
       categoria = categoriaRepository.findById(id).get();
@@ -67,7 +67,7 @@ public class CategoriaService implements ICategoriaService {
   }
 
   @Override
-  public void deleteCategoria(Long id) {
+  public void delete(Long id) {
     categoriaRepository.deleteById(id);
   }
   

@@ -20,8 +20,8 @@ import bulicho.ecommerce.bulicho.dto.CategoriaRequestDTO;
 import bulicho.ecommerce.bulicho.entities.Categoria;
 import bulicho.ecommerce.bulicho.entities.Departamento;
 import bulicho.ecommerce.bulicho.models.ResponseModel;
-import bulicho.ecommerce.bulicho.services.impl.CategoriaService;
-import bulicho.ecommerce.bulicho.services.impl.DepartamentoService;
+import bulicho.ecommerce.bulicho.services.interfaces.ICategoriaService;
+import bulicho.ecommerce.bulicho.services.interfaces.IDepartamentoService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -32,9 +32,9 @@ import io.swagger.annotations.ApiParam;
 public class CategoriaController {
   
   @Autowired
-  private CategoriaService categoriaService;
+  private ICategoriaService categoriaService;
   @Autowired
-  private DepartamentoService departamentoService;
+  private IDepartamentoService departamentoService;
 
   @GetMapping
   @ApiOperation(value = "Busca todas as categorias")
@@ -56,7 +56,7 @@ public class CategoriaController {
       return new ResponseEntity<ResponseModel<Categoria>>(response,HttpStatus.NOT_FOUND);
     }
 
-    Categoria categoria  = categoriaService.getCategoria(id);
+    Categoria categoria  = categoriaService.get(id);
     categorias.add(categoria);
     response = new ResponseModel<Categoria>(200,"Sucesso",categorias);
 
@@ -78,10 +78,10 @@ public class CategoriaController {
       return new ResponseEntity< ResponseModel<Categoria>>(response,HttpStatus.NOT_FOUND);
     }
     try{
-      Departamento departamento = departamentoService.getDepartamento(categoriaRequestDTO.getIdDepartamento());
+      Departamento departamento = departamentoService.get(categoriaRequestDTO.getIdDepartamento());
       categoriaDTO = new CategoriaDTO(categoriaRequestDTO.getNome(),departamento);
-      Long id = categoriaService.createCategoria(categoriaDTO);
-      Categoria categoria = categoriaService.getCategoria(id);
+      Long id = categoriaService.create(categoriaDTO);
+      Categoria categoria = categoriaService.get(id);
 
       status = HttpStatus.CREATED;
       categorias.add(categoria);
@@ -117,11 +117,11 @@ public class CategoriaController {
         return new ResponseEntity< ResponseModel<Categoria>>(response,HttpStatus.NOT_FOUND);
       }
       
-       departamento = departamentoService.getDepartamento(categoriaRequestDTO.getIdDepartamento());
+       departamento = departamentoService.get(categoriaRequestDTO.getIdDepartamento());
     }
     try{
       categoriaDTO = new CategoriaDTO(categoriaRequestDTO.getNome(),departamento);
-      Categoria categoria = categoriaService.updateCategoria(id, categoriaDTO);
+      Categoria categoria = categoriaService.update(id, categoriaDTO);
       categorias.add(categoria);
       status = HttpStatus.CREATED;
       response = new ResponseModel<Categoria>(200,"Sucessooo",categorias);
@@ -147,7 +147,7 @@ public class CategoriaController {
     }
 
     try{
-      categoriaService.deleteCategoria(id);
+      categoriaService.delete(id);
       response = new ResponseModel<Categoria>(203,"Sucesso",categorias);
       status = HttpStatus.NON_AUTHORITATIVE_INFORMATION;
     }catch(Exception e){

@@ -22,7 +22,7 @@ public class DepartamentoService implements IDepartamentoService{
   }
 
   @Override
-  public Departamento getDepartamento(Long id) {
+  public Departamento get(Long id) {
     Departamento dep;
     try {
        dep = departamentoRepository.findById(id).get();
@@ -33,7 +33,7 @@ public class DepartamentoService implements IDepartamentoService{
   }
 
   @Override
-  public Long createDepartamento(DepartamentoDTO departamentoDTO) {
+  public Long create(DepartamentoDTO departamentoDTO) {
     Long id = departamentoRepository.save(new Departamento(departamentoDTO)).getId();
     return  id;
   }
@@ -44,7 +44,7 @@ public class DepartamentoService implements IDepartamentoService{
   }
 
   @Override
-  public Departamento updateDepartamento(Long id, DepartamentoDTO departamentoDTO) {
+  public Departamento update(Long id, DepartamentoDTO departamentoDTO) {
     Departamento departamento = departamentoRepository.findById(id).get();
     departamento.setNome(
       departamentoDTO.getNome()==null?departamento.getNome():departamentoDTO.getNome()
@@ -54,7 +54,7 @@ public class DepartamentoService implements IDepartamentoService{
   }
 
   @Override
-  public void deleteDepartamento(Long id) {
+  public void delete(Long id) {
     departamentoRepository.deleteById(id);    
   }
   
