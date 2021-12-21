@@ -9,8 +9,8 @@ import bulicho.ecommerce.bulicho.entities.Produto;
 public interface IProdutoService {
   public List<Produto> listAll();
   public Produto get(UUID id);
-  public Long create(ProdutoDTO produtoDTO);
-  public Boolean departamentoExists(UUID id);
+  public UUID create(ProdutoDTO produtoDTO);
+  public Boolean produtoExists(UUID id);
   public Produto update(UUID id,ProdutoDTO produtoDTO);
   public void delete(UUID id);
 }

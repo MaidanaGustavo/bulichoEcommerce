@@ -41,6 +41,16 @@ public class ProdutoDTO {
     this.categorias = categorias;
   }
 
+  public ProdutoDTO(ProdutoRequestDTO produtoRequestDTO){
+    this.codigo = produtoRequestDTO.getCodigo();
+    this.titulo = produtoRequestDTO.getTitulo();
+    this.preco = produtoRequestDTO.getPreco();
+    this.quantidadeEmEstoque = produtoRequestDTO.getQuantidadeEmEstoque();
+    this.descricao = produtoRequestDTO.getDescricao();
+    this.caminhoFotoPrincipal = produtoRequestDTO.getCaminhoFotoPrincipal();
+    this.fotos = produtoRequestDTO.getFotos();
+  }
+
   public ProdutoDTO(){}
 
   

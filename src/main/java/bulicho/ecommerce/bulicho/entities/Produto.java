@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import bulicho.ecommerce.bulicho.dto.ProdutoDTO;
 
@@ -34,7 +38,7 @@ public class Produto implements Serializable {
   @ManyToOne
   @JoinColumn(name = "id_marca")
   private Marca marca;
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
     name = "produtos_categorias",
     joinColumns = @JoinColumn(name="id_produto"),
@@ -42,9 +46,12 @@ public class Produto implements Serializable {
   )
   private List<Categoria> categorias;
 
-  @OneToMany
+  @OneToMany()
   @JoinColumn(name = "id_produto" )
+  @LazyCollection(LazyCollectionOption.FALSE)
   private List<FotoProduto> fotos;
+
+  
 
   public Produto(){}
 
@@ -128,6 +135,14 @@ public class Produto implements Serializable {
 
   public void setCategorias(List<Categoria> categorias) {
     this.categorias = categorias;
+  }
+
+  public List<FotoProduto> getFotos() {
+    return this.fotos;
+  }
+
+  public void setFotos(List<FotoProduto> fotos) {
+    this.fotos = fotos;
   }
 
 }

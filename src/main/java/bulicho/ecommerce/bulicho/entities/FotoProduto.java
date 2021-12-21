@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "foto_produto")
@@ -15,8 +16,16 @@ public class FotoProduto {
   private UUID id;
   private String caminho;
   @ManyToOne
+  @JoinColumn(name = "id_produto")
   private Produto produto;
 
+  public FotoProduto(){}
+
+  public FotoProduto(UUID id, String caminho, Produto produto){
+    this.id = id;
+    this.caminho = caminho;
+    this.produto = produto;
+  }
   public UUID getId() {
     return this.id;
   }
