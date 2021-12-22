@@ -3,10 +3,13 @@ package bulicho.ecommerce.bulicho.entities;
 import java.util.UUID;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import bulicho.ecommerce.bulicho.dto.FotoProdutoDTO;
 
 @Entity(name = "foto_produto")
 public class FotoProduto {
@@ -15,7 +18,7 @@ public class FotoProduto {
   @GeneratedValue
   private UUID id;
   private String caminho;
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "id_produto")
   private Produto produto;
 
@@ -26,6 +29,12 @@ public class FotoProduto {
     this.caminho = caminho;
     this.produto = produto;
   }
+
+   public FotoProduto(FotoProdutoDTO fotoProdutoDTO){
+     this.caminho = fotoProdutoDTO.getCaminho();
+     this.produto = fotoProdutoDTO.getProduto();
+   }
+   
   public UUID getId() {
     return this.id;
   }

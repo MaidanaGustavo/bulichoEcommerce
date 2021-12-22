@@ -82,10 +82,10 @@ public class ProdutoService implements IProdutoService {
       produtoDTO.getCategorias()==null || produtoDTO.getCategorias().isEmpty()?
       produto.getCategorias():produtoDTO.getCategorias()
     );
-    produto.setFotos(
-      produtoDTO.getFotos()==null?
-      produto.getFotos():produtoDTO.getFotos()
-    );
+    // produto.setFotos(
+    //   produtoDTO.getFotos()==null?
+    //   produto.getFotos():produtoDTO.getFotos()
+    // );
 
     produtoRepository.save(produto);
 
